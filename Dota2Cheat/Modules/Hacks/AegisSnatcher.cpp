@@ -33,7 +33,7 @@ void Modules::AegisSnatcher::OnFrame() {
 	if (gameTime - lastPickupTime >= 0.2f) {
 
 		ctx.localPlayer->PrepareOrder(
-			Order().SetType(DOTA_UNIT_ORDER_PICKUP_ITEM)
+			PlayerOrder().SetType(DOTA_UNIT_ORDER_PICKUP_ITEM)
 			.SetTargetIndex(aegis->GetIndex())
 			.SetIssuer(ctx.localHero)
 		);

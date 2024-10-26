@@ -4,7 +4,7 @@
 typedef void* CFileHandle;
 
 // filesystem_stdio.dll
-// All these functions are directly xref'd like "CBaseFileSystem::Read"
+// Most of these functions are directly xref'd like "CBaseFileSystem::Read"
 // You can find them in TF2 sources to see exact implementations
 class CBaseFileSystem : public VClass
 {
@@ -36,6 +36,17 @@ public:
 	// Reads a line from a CFileHandle to a buffer. Returns the buffer if successful
 	char* ReadLine(char* buffer, int size, CFileHandle handle) {
 		return CallVFunc<56, char*>(buffer, size, handle);
+	}
+
+	enum SearchPathAdd_t : uint32_t {
+		PATH_ADD_TO_HEAD, // First path searched
+		PATH_ADD_TO_TAIL, // Last path searched
+	};
+
+	using SearchPathPriority_t = uint32_t;
+
+	void AddSearchPath(const char* path, const char* scope, SearchPathAdd_t order, SearchPathPriority_t priority = 0) {
+		CallVFunc<31>(path, scope, order, priority);
 	}
 
 	static CBaseFileSystem* Get();

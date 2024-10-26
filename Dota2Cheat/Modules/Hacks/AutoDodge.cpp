@@ -48,7 +48,7 @@ void Modules::AutoDodge::OnFrame() {
 			continue;
 
 		ctx.localPlayer->PrepareOrder(
-			Order()
+			PlayerOrder()
 			.SetType(DOTA_UNIT_ORDER_CAST_NO_TARGET)
 			.SetAbilityIndex(usedItem->GetIndex())
 			.SetIssuer(ctx.localHero)

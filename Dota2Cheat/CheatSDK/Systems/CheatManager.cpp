@@ -65,9 +65,10 @@ void CCheatManager::LoadGameSpecific() {
 		{ "ISteamClient", ISteamClient::Get() },
 		{ "ISteamGameCoordinator", ISteamGC::Get() },
 
+		{ "CSchemaSystem", CSchemaSystem::Get()},
+		
 		// Unused but pertinent interfaces
 		{ "CEngineClient", Memory::GetInterfaceBySubstr("engine2.dll", "Source2EngineToClient0") },
-		{ "CSchemaSystem", Memory::GetInterfaceBySubstr("schemasystem.dll", "SchemaSystem") },
 		});
 
 	CCVar::Get()->DumpConVarsToMap();

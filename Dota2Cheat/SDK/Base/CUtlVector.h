@@ -61,6 +61,13 @@ public:
 		m_Size--;
 	}
 
+	void remove_at(unsigned idx) {
+		for (int i = idx + 1; i < m_Size; i++)
+			m_pElements[i - 1] = m_pElements[i];
+
+		m_Size--;
+	}
+
 	void push_back(const T& elem) {
 		m_Size++;
 		adjust_capacity();

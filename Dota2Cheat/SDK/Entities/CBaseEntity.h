@@ -65,7 +65,7 @@ public:
 	}
 
 	bool IsDormant() const {
-		return GetIdentity() && IsDormant();
+		return GetIdentity() && GetIdentity()->IsDormant();
 	}
 
 	const char* GetModelName() const {

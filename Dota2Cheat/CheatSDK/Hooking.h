@@ -1,7 +1,20 @@
 #pragma once
-#include <Base/Bytehook.h>
 
 namespace Hooks {
+	struct HookData {
+		std::string name;
+		void* target;
+		bool enabled = true;
+
+		bool SetEnabled(bool val);
+	};
+
+	inline std::vector<HookData> installed;
+
+	bool UnhookAll();
+	bool Unhook(void* target);
+	bool Hook(void* target, void* detour, void* original, const char* name);;
+
 	void InstallHooks();
 
 	void InstallAuxiliaryHooks();
@@ -11,7 +24,10 @@ namespace Hooks {
 
 	// Reloads every hook
 	inline void Reload() {
-		hooks::UnhookAll();
+		UnhookAll();
 		InstallHooks();
 	}
 }
+
+#define HOOKFUNC(func) Hooks::Hook(func, &hk##func, &o##func, #func)
+#define ORIGCALL(func) ((decltype(&hk##func))(o##func))

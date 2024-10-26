@@ -3,11 +3,6 @@
 #include <cstdint>
 #include "../../Base/Vector.h"
 
-typedef int32_t int32;
-typedef int64_t int64;
-typedef uint32_t uint32;
-typedef uint64_t uint64;
-
 #define BITBUF_INLINE inline
 #define RESTRICT __restrict
 
@@ -121,10 +116,10 @@ public:
     unsigned int	ReadUBitVarInternal( int encodingType );
 
     // reads a varint encoded integer
-    uint32			ReadVarInt32();
-    uint64			ReadVarInt64();
-    int32			ReadSignedVarInt32();
-    int64			ReadSignedVarInt64();
+    uint32_t			ReadVarInt32();
+    uint64_t			ReadVarInt64();
+    int32_t			ReadSignedVarInt32();
+    int64_t			ReadSignedVarInt64();
 
     // You can read signed or unsigned data with this, just cast to
     // a signed int if necessary.
@@ -150,7 +145,7 @@ public:
     BITBUF_INLINE int	ReadShort() { return (short)ReadUBitLong(16); }
     BITBUF_INLINE int	ReadWord() { return ReadUBitLong(16); }
     BITBUF_INLINE long ReadLong() { return ReadUBitLong(32); }
-    int64			ReadLongLong();
+    int64_t			ReadLongLong();
     float			ReadFloat();
     bool			ReadBytes(void *pOut, int nBytes);
 

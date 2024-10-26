@@ -41,7 +41,7 @@ namespace Modules {
 
 			if (!isSeenAsIllusion) {
 				// from CDOTA_Modifier_Illusion::OnCreated
-				// also observed via cl_particle_log_creates
+				// also observed via да
 				ClientAddNewModifier(hero, "modifier_phantom_lancer_juxtapose_illusion");
 				isSeenAsIllusion = true;
 			}

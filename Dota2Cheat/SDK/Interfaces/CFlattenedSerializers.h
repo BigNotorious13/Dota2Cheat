@@ -26,7 +26,5 @@ public:
 		CFlattenedSerializer* c;
 	};
 
-	FIELD(CUtlVector<FSListNode>, NetworkedClasses, 0x18);
-
 	static CFlattenedSerializers* Get();
 };

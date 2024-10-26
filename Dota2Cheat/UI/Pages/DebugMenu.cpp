@@ -18,7 +18,7 @@ void DebugMenu() {
 			Hooks::Reload();
 		}
 
-		for (auto& hook : hooks::installed) {
+		for (auto& hook : Hooks::installed) {
 			bool v = hook.enabled;
 
 			std::string repr = std::format("{:#X} | {}", (uintptr_t)hook.target, hook.name);

@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <fstream>
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <span>
 #include <array>
 #include "../Base/Definitions.h"
@@ -110,7 +110,7 @@ struct CVarID
 // tier0.dll
 class CCVar : public VClass {
 public:
-	static inline std::map<std::string, CVarID> CVars{};
+	static inline std::unordered_map<std::string, CVarID> CVars{};
 	using CVarCallbackFn = void* (*)(const CVarID& id, int unk1, const CVarValue* val, const CVarValue* old_val);
 
 	CVarCallbackFn& GetCallback(int id) {

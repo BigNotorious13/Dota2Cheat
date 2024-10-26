@@ -83,12 +83,14 @@
     <ClCompile Include="SDK\Interfaces\CVarSystem.cpp" />
     <ClCompile Include="SDK\Interfaces\Network\CNetworkGameClient.cpp" />
     <ClCompile Include="UI\Pages\DebugMenu.cpp" />
-    <ClCompile Include="SDK\Base\Bytehook.cpp" />
+    <ClCompile Include="CheatSDK\Bytehook.cpp" />
     <ClCompile Include="Modules\UI\AbilityESP\AbilityESP.Items.cpp" />
     <ClCompile Include="Modules\UI\AbilityESP\AbilityESP.Abilities.cpp" />
     <ClCompile Include="CheatSDK\Shaders.cpp" />
     <ClCompile Include="SDK\Interfaces\GC\CDOTAGCLobbyManager.cpp" />
     <ClCompile Include="SDK\Netvars.cpp" />
+    <ClCompile Include="Modules\Hacks\RuneSnatcher.cpp" />
+    <ClCompile Include="Modules\Hacks\VisibleByEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\UI\UIOverhaul.h" />
@@ -112,7 +114,6 @@
     <ClInclude Include="Modules\Hacks\BadCastPrevention.h" />
     <ClInclude Include="Modules\Utility\AttackAnimTracker.h" />
     <ClInclude Include="Modules\UI\TPTracker.h" />
-    <ClInclude Include="SDK\Base\Bytehook.h" />
     <ClInclude Include="SDK\Base\Color.h" />
     <ClInclude Include="SDK\Base\Definitions.h" />
     <ClInclude Include="SDK\Base\Function.h" />
@@ -271,6 +272,10 @@
     <ClInclude Include="Modules\D2CModule.h" />
     <ClInclude Include="SDK\Interfaces\GC\Common.h" />
     <ClInclude Include="CheatSDK\GameEventListeners\lobby_updated.h" />
+    <ClInclude Include="SDK\Interfaces\CDOTAInput.h" />
+    <ClInclude Include="Modules\Hacks\RuneSnatcher.h" />
+    <ClInclude Include="Modules\Hacks\VisibleByEnemy.h" />
+    <ClInclude Include="SDK\Base\ExportFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

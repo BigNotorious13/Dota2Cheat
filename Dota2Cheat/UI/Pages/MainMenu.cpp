@@ -3,6 +3,7 @@
 #include "../../Modules/UI/UIOverhaul.h"
 #include "../../Modules/Hacks/DotaPlusUnlocker.h"
 #include "../../Modules/Hacks/TreeChanger.h"
+#include "../../Modules/Hacks/VisibleByEnemy.h"
 #include "DebugMenu.h"
 
 void Pages::MainMenu::Draw() {
@@ -32,7 +33,7 @@ void Pages::MainMenu::Draw() {
 		ImGui::Text("Shows enemy teleports on the map");
 
 		ImGui::Checkbox("Enabled", &Config::TPTracker::Enabled);
-		ImGui::SameLine(); HelpMarker("Only displays initial recipient pos for Boots of Travel");
+		ImGui::SameLine(); HelpMarker("Only displays initial recipient position for Boots of Travel");
 		ImGui::SliderInt("Fade duration", &Config::TPTracker::FadeDuration, 3, 10);
 		ImGui::TreePop();
 	}
@@ -45,6 +46,24 @@ void Pages::MainMenu::Draw() {
 		ImGui::SameLine(); HelpMarker("Show who created the particle");
 
 		ImGui::SliderInt("Icon fade duration", &Config::ParticleMapHack::FadeDuration, 3, 10);
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Visible by Enemy")) {
+		if(ImGui::Checkbox("Enable", &Config::VBE::Enabled))
+			Modules::VisibleByEnemy.QueueToggled();
+		if (ImGui::ColorEdit3("Particle color", Config::VBE::ParticleColor.Base()))
+			Modules::VisibleByEnemy.QueueColorChanged();
+
+		ImGui::Text("Filters:");
+		if (
+			ImGui::Checkbox("NPCs", &Config::VBE::Filters::NPCs)
+			||
+			ImGui::Checkbox("Creeps", &Config::VBE::Filters::Creeps)
+			) {
+			Modules::VisibleByEnemy.QueueFiltersChanged();
+		}
+
 		ImGui::TreePop();
 	}
 
@@ -77,7 +96,7 @@ void Pages::MainMenu::Draw() {
 		ImGui::TreePop();
 	};
 	if (ImGui::TreeNode("Snatcher")) {
-		ImGui::Checkbox("Bounty runes", &Config::AutoPickUpRunes);
+		ImGui::Checkbox("Runes", &Config::AutoPickUpRunes);
 		ImGui::Checkbox("Aegis", &Config::AutoPickUpAegis);
 		ImGui::TreePop();
 	}
@@ -134,7 +153,7 @@ void Pages::MainMenu::Draw() {
 	if (ImGui::TreeNode("IllusionESP")) {
 		ImGui::Checkbox("Enable", &Config::IllusionColoring::Enabled);
 
-		ImGui::ColorEdit3("Illusion color", &Config::IllusionColoring::Color.x);
+		ImGui::ColorEdit3("Illusion color", Config::IllusionColoring::Color.Base());
 		ImGui::TreePop();
 	}
 	if (ImGui::TreeNode("Show enemy spells")) {
@@ -216,7 +235,7 @@ void Pages::MainMenu::Draw() {
 	if (circleMenuVisible) {
 		ImGui::Begin("C I R C L E S", &circleMenuVisible, ImGuiWindowFlags_AlwaysAutoResize);
 		ImGui::InputInt("Circle radius", &Config::CircleRadius, 1, 10);
-		ImGui::ColorEdit3("Circle RGB", &Config::CircleRGB.x);
+		ImGui::ColorEdit3("Circle RGB", Config::CircleRGB.Base());
 
 		if (CheatGui::Button("Draw circle")) {
 			Vector color = Config::CircleRGB * 255;

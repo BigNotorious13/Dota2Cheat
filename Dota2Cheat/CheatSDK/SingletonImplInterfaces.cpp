@@ -4,6 +4,10 @@ CBaseFileSystem* CBaseFileSystem::Get() {
 	static CBaseFileSystem* inst = Memory::GetInterfaceBySubstr("filesystem_stdio.dll", "VFileSystem");
 	return inst;
 }
+CDOTAInput* CDOTAInput::Get() {
+	static CDOTAInput* inst = Address(CSource2Client::Get()->GetVFunc(VMI::CSource2Client::CreateMove)).GetAbsoluteAddress(3).Dereference();
+	return inst;
+}
 
 ISteamGameCoordinator* ISteamGameCoordinator::Get() {
 	static ISteamGameCoordinator* inst = ISteamClient::Get()->GetISteamGenericInterface(

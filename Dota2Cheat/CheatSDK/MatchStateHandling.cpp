@@ -18,23 +18,15 @@
 //#include "../Modules/Hacks/AutoPing.h"
 
 void CMatchStateManager::EnteredPreGame() {
-	if (!CPlayerResource::Get())
-		return;
 	INetworkClientService::Get()->GetIGameClient()->GetNetChannel()->InstallMessageFilter(&Hooks::d2cNetFilter);
-	ctx.localPlayer = Signatures::GetPlayer(-1);
+	ctx.localPlayer = CEntSys::Get()->GetEntity<CDOTAPlayerController>(
+		INetworkClientService::Get()->GetIGameClient()->GetLocalPlayerID() + 1
+	);
 
 	if (!ctx.localPlayer)
 		return;
 
 	LogI("GAME STAGE: PRE-GAME");
-
-#ifdef _DEBUG
-	LogFI("Player indices:\n\t+1: {}\n\tGetPlayer: {}\n\tPlayerResource: {}",
-		INetworkClientService::Get()->GetIGameClient()->GetLocalPlayerID() + 1,
-		Signatures::GetPlayer(-1)->GetIndex(),
-		CPlayerResource::Get()->PlayerIDToHandle(INetworkClientService::Get()->GetIGameClient()->GetLocalPlayerID()).Index()
-	);
-#endif
 
 	LogI("[ REALLOCATING GAME SYSTEMS ]");
 
@@ -101,7 +93,10 @@ void CMatchStateManager::LeftMatch() {
 }
 
 void CMatchStateManager::CheckForOngoingGame() {
-	if (!INetworkClientService::Get()->GetIGameClient()->IsInGame())
+	if (
+		!INetworkClientService::Get()->GetIGameClient() 
+		|| !INetworkClientService::Get()->GetIGameClient()->IsInGame()
+		)
 		return;
 
 	MatchStateManager.CacheAllEntities();

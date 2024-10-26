@@ -197,7 +197,9 @@
     <ClCompile Include="include\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="Modules\Hacks\ClaimTutorialRewards.cpp" />
+    <ClCompile Include="Modules\Hacks\RuneSnatcher.cpp" />
     <ClCompile Include="Modules\Hacks\TreeChanger.cpp" />
+    <ClCompile Include="Modules\Hacks\VisibleByEnemy.cpp" />
     <ClCompile Include="Modules\UI\AbilityESP\AbilityESP.Abilities.cpp" />
     <ClCompile Include="Modules\UI\AbilityESP\AbilityESP.Items.cpp" />
     <ClCompile Include="Modules\Utility\CVarSpoofer.cpp" />
@@ -243,7 +245,7 @@
     <ClCompile Include="Modules\Utility\AttackAnimTracker.cpp" />
     <ClCompile Include="Modules\Utility\AttackTargetFinder.cpp" />
     <ClCompile Include="Modules\Utility\ParticleGC.cpp" />
-    <ClCompile Include="SDK\Base\Bytehook.cpp" />
+    <ClCompile Include="CheatSDK\Bytehook.cpp" />
     <ClCompile Include="SDK\Entities\CDOTAPlayerController.cpp" />
     <ClCompile Include="SDK\Entities\CDOTAUnitInventory.cpp" />
     <ClCompile Include="SDK\GameSystems\CDOTAParticleManager.cpp" />
@@ -295,10 +297,12 @@
     <ClInclude Include="include\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="include\imgui\imgui_impl_win32.h" />
     <ClInclude Include="Modules\D2CModule.h" />
+    <ClInclude Include="Modules\Hacks\RuneSnatcher.h" />
     <ClInclude Include="Modules\Hacks\TreeChanger.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Modules\Hacks\VisibleByEnemy.h" />
     <ClInclude Include="Modules\MListeners.h" />
     <ClInclude Include="Modules\UI\D2CUIModule.h" />
     <ClInclude Include="Modules\UI\ModifierESP.h">
@@ -315,6 +319,7 @@
     </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SDK\Base\CUtlAbstractDelegate.h" />
+    <ClInclude Include="SDK\Base\ExportFunction.h" />
     <ClInclude Include="SDK\Base\KeyValues.h" />
     <ClInclude Include="SDK\Base\MurmurHash2.h" />
     <ClInclude Include="SDK\Base\VMT.h" />
@@ -370,6 +375,7 @@
     <ClInclude Include="SDK\GameSystems\CRenderGameSystem.h" />
     <ClInclude Include="CheatSDK\Data\EntityList.h" />
     <ClInclude Include="SDK\Dota2SDK.h" />
+    <ClInclude Include="SDK\Interfaces\CDOTAInput.h" />
     <ClInclude Include="SDK\Interfaces\CEngineServiceMgr.h" />
     <ClInclude Include="SDK\Interfaces\CFlattenedSerializers.h" />
     <ClInclude Include="SDK\Interfaces\CGameUI.h" />
@@ -393,7 +399,6 @@
     <ClInclude Include="Modules\Hacks\BadCastPrevention.h" />
     <ClInclude Include="Modules\Utility\AttackAnimTracker.h" />
     <ClInclude Include="Modules\UI\TPTracker.h" />
-    <ClInclude Include="SDK\Base\Bytehook.h" />
     <ClInclude Include="SDK\Base\Color.h" />
     <ClInclude Include="SDK\Base\Definitions.h" />
     <ClInclude Include="SDK\Base\Function.h" />

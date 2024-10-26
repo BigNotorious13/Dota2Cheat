@@ -7,10 +7,12 @@
 
 #include "UI/Pages/MainMenu.h"
 #include "Modules/Hacks/SkinChanger.h"
+#include "Modules/Hacks/RuneSnatcher.h"
 #include <dota_usercmd.pb.h>
 #include <netmessages.pb.h>
 
 #include "../Modules/Hacks/DotaPlusUnlocker.h"
+#include <Base/VMT.h>
 
 static const char* GetWinAPIExceptionName(ULONG code) {
 	switch (code) {
@@ -153,6 +155,29 @@ void hkSpawnWearables(CNPC* thisptr, void* kv) {
 	}
 }
 
+
+
+void* oCreateMove;
+void hkCreateMove(CDOTAInput* rcx, int slot, bool should_fill_weaponselect) {
+	//NormalClass** cmdBufs = Address(rcx->GetVFunc(5)).Offset(0x8c).GetAbsoluteAddress(3).Dereference();
+	//NormalClass* cmdBuf = cmdBufs[0];
+	//ONLY_ONCE{
+	//	LogFW("UserCMD buffer: {}", (void*)cmdBuf);
+	//}
+
+	//auto lastTick = cmdBuf->Member<uint32_t>(0x5748);
+	//auto* cmd = cmdBuf->MemberInline<NormalClass>(0x90 * (lastTick % 150))->MemberInline<CDota2UserCmdPB>(0x10);
+	ORIGCALL(CreateMove)(rcx, slot, should_fill_weaponselect);
+	//auto tracedItem = rcx->Member<CHandle<CEnt>>(0x5d4 + 0x8c);
+	//if (tracedItem.IsValid())
+	//{
+	//	Modules::RuneSnatcher.OnTracedItem(tracedItem.Index());
+	//}
+
+	//LogFI("Random seed: {}", cmd->base().random_seed() & 0x7FFFFFFF);
+}
+
+
 void HackThread(HMODULE hModule) {
 #ifndef _DEBUG
 	AddVectoredExceptionHandler(1, VEH);
@@ -163,6 +188,9 @@ void HackThread(HMODULE hModule) {
 	MatchStateManager.CheckForOngoingGame();
 
 #ifdef _DEBUG
+	//auto CreateMove = VMT(CDOTAInput::Get())[5];
+	//HOOKFUNC(CreateMove);
+
 	auto OnPreDataUpdate = Memory::Scan("48 89 5C 24 ? 56 48 83 EC 20 33 DB 48 8B F2", "client.dll");
 	HOOKFUNC(OnPreDataUpdate);
 

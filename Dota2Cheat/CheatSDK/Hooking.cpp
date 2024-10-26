@@ -14,8 +14,11 @@
 
 #include "../Hooks/Misc.h"
 
+#include "../Modules/Hacks/VisibleByEnemy.h"
+
 void Hooks::InstallHooks() {
-	hooks::Hook(Signatures::PrepareUnitOrders, &Hooks::hkPrepareUnitOrders, &Hooks::oPrepareUnitOrders, "CDOTAPlayerController::PrepareUnitOrders");
+	Hooks::Hook(CDOTAInput::Get()->GetVFunc(VMI::CDOTAInput::CreateMove - 1), &hkCInput__SendMove, &oCInput__SendMove, "CDOTAInput::SendMove");
+	//Hooks::Hook(Signatures::PrepareUnitOrders, &Hooks::hkPrepareUnitOrders, &Hooks::oPrepareUnitOrders, "CDOTAPlayerController::PrepareUnitOrders");
 
 #ifdef _DEBUG
 	auto BShowRestrictedAddonPopup = SignatureDB::FindSignature("BShowRestrictedAddonPopup");
@@ -25,8 +28,8 @@ void Hooks::InstallHooks() {
 #if defined(_DEBUG) && !defined(_TESTING)
 	auto SendMsg = VMT(ISteamGC::Get())[0];
 	auto RetrieveMessage = VMT(ISteamGC::Get())[2];
-	hooks::Hook(SendMsg, &Hooks::hkSendMessage, &Hooks::oSendMessage, "ISteamGameCoordinator::SendMessage");
-	hooks::Hook(RetrieveMessage, &Hooks::hkRetrieveMessage, &Hooks::oRetrieveMessage, "ISteamGameCoordinator::RetrieveMessage");
+	Hooks::Hook(SendMsg, &Hooks::hkSendMessage, &Hooks::oSendMessage, "ISteamGameCoordinator::SendMessage");
+	Hooks::Hook(RetrieveMessage, &Hooks::hkRetrieveMessage, &Hooks::oRetrieveMessage, "ISteamGameCoordinator::RetrieveMessage");
 #endif // _DEBUG
 
 	{
@@ -45,6 +48,7 @@ void Hooks::InstallHooks() {
 		auto SetRenderingEnabled = vtable[VMI::CParticleCollection::SetRenderingEnabled];
 		HOOKFUNC(SetRenderingEnabled);
 	}
+
 	auto Present = SignatureDB::FindSignature("IDXGISwapChain::Present");
 	HOOKFUNC(Present);
 
@@ -69,7 +73,15 @@ void Hooks::InstallAuxiliaryHooks() {
 		->RegisterEventListener_Abstract(
 			CUtlAbstractDelegate(&Hooks::frameListener, &Hooks::FrameEventListener::OnFrameBoundary),
 			"EventFrameBoundary_t",
-			"D2C::OnFrameBoundary"
+			"D2C::FrameListener"
+		);
+
+	CEngineServiceMgr::Get()
+		->GetEventDispatcher()
+		->RegisterEventListener_Abstract(
+			CUtlAbstractDelegate(&Modules::VisibleByEnemy, &Modules::M_VBE::OnClientPreSimulate),
+			"EventClientPreSimulate_t",
+			"D2C::VBE::PreSimulate"
 		);
 }
 
@@ -80,6 +92,13 @@ void Hooks::RemoveAuxiliaryHooks() {
 		->UnregisterEventListener_Abstract(
 			CUtlAbstractDelegate(&Hooks::frameListener, &Hooks::FrameEventListener::OnFrameBoundary),
 			"EventFrameBoundary_t"
+		);
+
+	CEngineServiceMgr::Get()
+		->GetEventDispatcher()
+		->UnregisterEventListener_Abstract(
+			CUtlAbstractDelegate(&Modules::VisibleByEnemy, &Modules::M_VBE::OnClientPreSimulate),
+			"EventClientPreSimulate_t"
 		);
 
 	CEntSys::Get()->GetListeners().remove_by_value(&EntityList);

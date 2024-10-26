@@ -5,7 +5,21 @@
 
 #include "CDOTABaseNPCHero.h"
 
-struct Order {
+// client.dll!CUnitOrders
+struct CUnitOrders {
+	CUtlVector< entidx_t > m_nUnits;// 0x0;
+	Vector m_vPosition; // 0x18;
+	uint32_t m_nIssuerPlayerIndex; // 0x24;
+	int32_t m_nOrderSequenceNumber; // 0x28;
+	dotaunitorder_t m_nOrderType; // 0x2c;
+	entidx_t m_nTargetIndex; // 0x30;
+	entidx_t m_nAbilityIndex; // 0x34;
+	uint32_t m_nFlags;  // 0x38;
+};
+
+static_assert(sizeof(CUnitOrders) == 0x40);
+
+struct PlayerOrder {
 	dotaunitorder_t Type{};
 	uint32_t
 		TargetIndex{},
@@ -18,7 +32,7 @@ struct Order {
 	CBaseEntity* Issuer{};
 
 #define BUILDER_SETTER(var) \
-	Order& Set##var(decltype(var) var){ \
+	PlayerOrder& Set##var(decltype(var) var){ \
 		this->var = var; return *this; \
 	}
 
@@ -32,6 +46,8 @@ struct Order {
 	BUILDER_SETTER(IssuerType);
 
 #undef BUILDER_SETTER
+
+	CUnitOrders ToUnitOrders() const;
 };
 
 class CDOTAPlayerController : public CBaseEntity {
@@ -42,6 +58,7 @@ public:
 		return GetAssignedHeroHandle().Entity();
 	}
 
+	FIELD(CUtlVector<CUnitOrders>, UnitOrders, Netvars::C_DOTAPlayerController::m_unitorders);
 	GETTER(CUtlVector<uint32_t>, GetSelectedUnits, Netvars::C_DOTAPlayerController::m_nSelectedUnits);
 	GETTER(int32_t, GetSequenceNum, Netvars::C_DOTAPlayerController::m_nOutgoingOrderSequenceNumber);
 	GETTER(uint32_t, GetPlayerID, Netvars::C_DOTAPlayerController::m_nPlayerID);
@@ -51,8 +68,9 @@ public:
 	void CastTarget(CDOTABaseAbility* ability, CBaseEntity* target, CBaseEntity* issuer = nullptr);
 	void BuyItem(int itemId);
 	void OrderMoveTo(const Vector& pos, bool directMovement = false, CBaseEntity* issuer = nullptr);
-	void PrepareOrder(dotaunitorder_t orderType, uint32_t targetIndex, const Vector& position, uint32_t abilityIndex, PlayerOrderIssuer_t orderIssuer, CBaseEntity* issuer, bool queue = false, bool showEffects = true);
-	void PrepareOrder(const Order& order) {
-		PrepareOrder(order.Type, order.TargetIndex, order.Position, order.AbilityIndex, order.IssuerType, order.Issuer, order.Queue, order.ShowEffects);
+
+	void PrepareOrder(const PlayerOrder& order) {
+		this->UnitOrders().push_back(order.ToUnitOrders());
+		//PrepareOrder(order.Type, order.TargetIndex, order.Position, order.AbilityIndex, order.IssuerType, order.Issuer, order.Queue, order.ShowEffects);
 	}
 };

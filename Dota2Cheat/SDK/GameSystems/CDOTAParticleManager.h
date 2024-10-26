@@ -52,7 +52,7 @@ struct CreateParticleInfo
 {
 	const char* m_szParticleName;
 	ParticleAttachment_t m_particleAttachment;
-	CBaseEntity* m_pTargetEntity;
+	const CBaseEntity* m_pTargetEntity;
 private:
 	void* unk[5] = {
 		nullptr,
@@ -133,6 +133,10 @@ struct ParticleWrapper {
 		particle = nullptr;
 		handle = INVALID_HANDLE;
 		info = CreateParticleInfo{};
+	}
+
+	CNewParticleEffect* operator->() {
+		return particle;
 	}
 };
 

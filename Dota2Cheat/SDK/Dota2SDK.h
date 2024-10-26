@@ -52,18 +52,20 @@ class CDOTABaseNPC_Hero;
 class CBaseEntity;
 class CDOTABaseAbility;
 class CDOTAItem;
+class CDOTAPlayerController;
 
 using CNPC = CDOTABaseNPC;
 using CEnt = CBaseEntity;
 using CHero = CDOTABaseNPC_Hero;
 using CAbility = CDOTABaseAbility;
 using CItem = CDOTAItem;
+using CPlayer = CDOTAPlayerController;
 
 #pragma endregion
 
 #include "Base/Definitions.h"
 #include "Base/Color.h"
-#include "Base/Bytehook.h"
+#include "Base/ExportFunction.h"
 #include "Base/VClass.h"
 #include "Base/NormalClass.h"
 #include "Base/Function.h"
@@ -94,6 +96,7 @@ using CItem = CDOTAItem;
 #include "Interfaces/CGameEntitySystem.h"
 #include "Interfaces/ISteamGameCoordinator.h"
 #include "Interfaces/CGameUI.h"
+#include "Interfaces/CDOTAInput.h"
 #include "Interfaces/CEngineServiceMgr.h"
 #include "Interfaces/CVarSystem.h"
 #include "Interfaces/CFlattenedSerializers.h"

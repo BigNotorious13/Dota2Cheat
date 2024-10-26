@@ -8,7 +8,7 @@
 // Virtual Method Index
 namespace VMI {
 #define Index inline uint32_t
-	
+
 	// client.dll
 	namespace CBaseEntity {
 		Index GetSchemaBinding{};
@@ -18,6 +18,14 @@ namespace VMI {
 	namespace CDOTAGameRules {
 		// JS func
 		Index GetGameTime{};
+	}
+
+	namespace CDOTAInput {
+		/*
+			xref: "cl %d =============" etc., appears in console
+			after setting cl_showusercmd to 1
+		*/
+		Index CreateMove{};
 	}
 
 	// client.dll
@@ -72,7 +80,7 @@ namespace VMI {
 		Index GetPhysicalArmorValue{};
 		Index GetMagicalArmorValue{};
 	}
-	
+
 	// client.dll
 	namespace CDOTABaseAbility {
 		// JS functions
@@ -80,7 +88,7 @@ namespace VMI {
 		Index GetEffectiveCastRange{};
 		Index GetManaCost{};
 	}
-	
+
 	// client.dll
 	namespace CDOTA_Buff {
 		// right above "dota_portrait_unit_modifiers_changed"
@@ -94,7 +102,7 @@ namespace VMI {
 		// xref: "CNetChan::SendNetMessage"
 		Index SendNetMessage{};
 	}
-	
+
 	// panorama.dll
 	namespace CUIEngineSource2 {
 		// xref: "CUIEngine::RunFrame"
@@ -108,7 +116,7 @@ namespace VMI {
 		// xref: "CUIEngine::RunScript (compile+run)"
 		Index RunScript{};
 	}
-	
+
 	// client.dll
 	namespace CSource2Client {
 		// look into the function behind "cl_showents" to find the EntitySystem qword
@@ -118,11 +126,13 @@ namespace VMI {
 		Index VoiceReliable{};
 		// xrefs: "userid", "steamid", "player_info"
 		Index NotifyDisconnect{};
+		// Right below NotifyDisconnect ^
+		Index CreateMove{};
 
 		// xref: "C:\\buildworker\\source2_dota_rel_2019_win64\\build\\src\\game\\client\\cdll_client_int.cpp"
 		Index FrameStageNotify{};
 	}
-	
+
 	// client.dll
 	namespace CRenderGameSystem {
 		// Last vfunc of class
@@ -153,6 +163,7 @@ namespace VMI {
 		TABLE_ENTRY(CSource2Client::FrameStageNotify)
 		TABLE_ENTRY(CSource2Client::VoiceReliable)
 		TABLE_ENTRY(CSource2Client::GetNetworkFieldChangeCallbackQueue)
+		TABLE_ENTRY(CSource2Client::CreateMove)
 		TABLE_ENTRY(CSource2Client::NotifyDisconnect)
 
 		TABLE_ENTRY(CUIEngineSource2::RunFrame)
@@ -168,6 +179,8 @@ namespace VMI {
 		TABLE_ENTRY(CDOTABaseNPC::GetMagicalArmorValue)
 		TABLE_ENTRY(CDOTABaseNPC::IsRoshan)
 		TABLE_ENTRY(CDOTABaseNPC::OnWearablesChanged)
+
+		TABLE_ENTRY(CDOTAInput::CreateMove)
 
 		TABLE_ENTRY(CDOTABaseAbility::GetManaCost)
 		TABLE_ENTRY(CDOTABaseAbility::GetEffectiveCastRange)

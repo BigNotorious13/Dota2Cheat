@@ -4,7 +4,7 @@
 void Modules::M_ManaHPAbuse::ReorderItems(const std::map<CDOTAItem*, int>& positions) {
 	for (auto& [item, pos] : positions)
 		ctx.localPlayer->PrepareOrder(
-			Order()
+			PlayerOrder()
 			.SetType(DOTA_UNIT_ORDER_MOVE_ITEM)
 			.SetAbilityIndex(item->GetIndex())
 			.SetTargetIndex(pos)
@@ -68,7 +68,7 @@ void Modules::M_ManaHPAbuse::ChangeItemStatTo(CDOTAItem* item, ItemStat stat, CB
 
 	for (int i = 0; i < cycles; i++)
 		ctx.localPlayer->PrepareOrder(
-			Order()
+			PlayerOrder()
 			.SetType(DOTA_UNIT_ORDER_CAST_NO_TARGET)
 			.SetAbilityIndex(item->GetIndex())
 			.SetIssuer(issuer)
@@ -117,7 +117,7 @@ void Modules::M_ManaHPAbuse::DropMode(CDOTABaseNPC* npc, CDOTAItem* ability, std
 	while (itemsToExclude.size() != 0) {
 		auto item = itemsToExclude.top();
 		ctx.localPlayer->PrepareOrder(
-			Order()
+			PlayerOrder()
 			.SetType(DOTA_UNIT_ORDER_DROP_ITEM)
 			.SetAbilityIndex(item->GetIndex())
 			.SetPosition(npc->GetPos())
@@ -147,7 +147,7 @@ void Modules::M_ManaHPAbuse::MoveMode(CDOTABaseNPC* npc, CDOTAItem* ability, std
 		}
 
 		ctx.localPlayer->PrepareOrder(
-			Order()
+			PlayerOrder()
 			.SetType(DOTA_UNIT_ORDER_MOVE_ITEM)
 			.SetAbilityIndex(item->GetIndex())
 			.SetTargetIndex(stashSlot)
@@ -155,7 +155,7 @@ void Modules::M_ManaHPAbuse::MoveMode(CDOTABaseNPC* npc, CDOTAItem* ability, std
 			.SetIssuer(npc));
 
 		ctx.localPlayer->PrepareOrder(
-			Order()
+			PlayerOrder()
 			.SetType(DOTA_UNIT_ORDER_MOVE_ITEM)
 			.SetAbilityIndex(item->GetIndex())
 			.SetTargetIndex(slot)
@@ -231,7 +231,7 @@ void Modules::M_ManaHPAbuse::PerformAbuse(CDOTABaseNPC* npc, CDOTAItem* ability)
 			EntityList.ForEachOfType(EntityType::PhysicalItem, [this, npc](auto& item) {
 				if (IsWithinRadius(item->GetPos(), ctx.localHero->GetPos(), 150))
 				ctx.localPlayer->PrepareOrder(
-					Order()
+					PlayerOrder()
 					.SetType(DOTA_UNIT_ORDER_PICKUP_ITEM)
 					.SetTargetIndex(item->GetIndex())
 					.SetQueue(true)

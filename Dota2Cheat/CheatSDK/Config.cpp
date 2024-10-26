@@ -98,6 +98,7 @@ void Config::ConfigManager::LoadEquippedItems(std::ifstream& stream) {
 // Pure elegancy
 #define CFG_VAR(var, defVal) cfg.AddVar<decltype(var)>(&Config::var, defVal, #var)
 
+// Defines name-based bindings and default values
 void Config::ConfigManager::SetupVars() {
 	CFG_VAR(AbilityESP::Enabled, true);
 	CFG_VAR(AbilityESP::UIScale, 1);
@@ -107,6 +108,11 @@ void Config::ConfigManager::SetupVars() {
 	CFG_VAR(AbilityESP::ShowAllies, true);
 	CFG_VAR(AbilityESP::ApplyIconModifiers, false);
 	CFG_VAR(AbilityESP::ShowCooldownDecimals, false);
+
+	CFG_VAR(VBE::Enabled, true);
+	CFG_VAR(VBE::ParticleColor, Vector(1, 0, 0));
+	CFG_VAR(VBE::Filters::Creeps, false);
+	CFG_VAR(VBE::Filters::NPCs, true);
 
 	CFG_VAR(Bars::HPNumbers, true);
 

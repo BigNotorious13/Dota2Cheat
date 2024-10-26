@@ -92,6 +92,15 @@ namespace Config {
 		inline bool ShowCooldownDecimals;
 	}
 
+	namespace VBE {
+		inline bool Enabled;
+		inline Vector ParticleColor;
+		
+		namespace Filters {
+			inline bool NPCs, Creeps;
+		}
+	}
+
 	namespace Bars {
 		inline bool HPNumbers;
 	}

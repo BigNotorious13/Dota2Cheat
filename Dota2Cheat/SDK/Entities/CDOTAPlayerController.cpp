@@ -1,55 +1,44 @@
 #include "CDOTAPlayerController.h"
-#include "../../Hooks/PrepareUnitOrders.h"
 
 void CDOTAPlayerController::CastNoTarget(CDOTABaseAbility* ability, CBaseEntity* issuer) {
-	PrepareOrder(DOTA_UNIT_ORDER_CAST_NO_TARGET,
-		0,
-		Vector::Zero,
-		ability->GetIndex(),
-		DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY,
-		issuer,
-		false,
-		true
+	PrepareOrder(
+		PlayerOrder()
+		.SetType(DOTA_UNIT_ORDER_CAST_NO_TARGET)
+		.SetAbilityIndex(ability->GetIndex())
+		.SetIssuer(issuer ? issuer : GetAssignedHero())
+		.SetIssuerType(DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY)
 	);
 }
 
 void CDOTAPlayerController::CastTarget(CDOTABaseAbility* ability, CBaseEntity* target, CBaseEntity* issuer) {
 	PrepareOrder(
-		DOTA_UNIT_ORDER_CAST_TARGET,
-		target->GetIndex(),
-		Vector::Zero,
-		ability->GetIndex(),
-		DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY,
-		issuer);
+		PlayerOrder()
+		.SetType(DOTA_UNIT_ORDER_CAST_TARGET)
+		.SetTargetIndex(target->GetIndex())
+		.SetAbilityIndex(ability->GetIndex())
+		.SetIssuer(issuer ? issuer : GetAssignedHero())
+		.SetIssuerType(DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY)
+	);
 }
 
 void CDOTAPlayerController::BuyItem(int itemId) {
-	PrepareOrder(DOTA_UNIT_ORDER_PURCHASE_ITEM,
-		1,
-		Vector::Zero,
-		itemId,
-		DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY,
-		GetAssignedHero(),
-		false,
-		true
+	PrepareOrder(
+		PlayerOrder()
+		.SetType(DOTA_UNIT_ORDER_PURCHASE_ITEM)
+		.SetTargetIndex(1)
+		.SetAbilityIndex(itemId)
+		.SetIssuer(GetAssignedHero())
+		.SetIssuerType(DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY)
 	);
 }
 
 void CDOTAPlayerController::OrderMoveTo(const Vector& pos, bool directMovement, CBaseEntity* issuer) {
-	PrepareOrder(directMovement ? DOTA_UNIT_ORDER_MOVE_TO_DIRECTION : DOTA_UNIT_ORDER_MOVE_TO_POSITION,
-		0,
-		pos,
-		0,
-		DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY,
-		issuer,
-		false,
-		true
+	PrepareOrder(
+		PlayerOrder()
+		.SetType(directMovement ? DOTA_UNIT_ORDER_MOVE_TO_DIRECTION : DOTA_UNIT_ORDER_MOVE_TO_POSITION)
+		.SetPosition(pos)
+		.SetIssuer(issuer)
+		.SetIssuerType(DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY)
 	);
 }
 
-void CDOTAPlayerController::PrepareOrder(dotaunitorder_t orderType, uint32_t targetIndex, const Vector& position, uint32_t abilityIndex, PlayerOrderIssuer_t orderIssuer, CBaseEntity* issuer, bool queue, bool showEffects) {
-	if (!Hooks::oPrepareUnitOrders)
-		return;
-
-	Hooks::oPrepareUnitOrders(this, orderType, targetIndex, (Vector*)&position, abilityIndex, orderIssuer, issuer, queue, showEffects);
-}

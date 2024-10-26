@@ -1,14 +1,15 @@
-#include "Bytehook.h"
+#include "Hooking.h"
 #include <MinHook.h>
+#include <Base/Logging.h>
 
-bool hooks::UnhookAll() {
+bool Hooks::UnhookAll() {
 	bool res = true;
 	for (const auto& hook : installed)
 		res = res && Unhook(hook.target);
 	return res;
 }
 
-bool hooks::Unhook(void* target) {
+bool Hooks::Unhook(void* target) {
 	auto it = std::find_if(installed.begin(), installed.end(), [target](auto data) { return data.target == target; });
 
 	if (it == installed.end()) {
@@ -22,7 +23,7 @@ bool hooks::Unhook(void* target) {
 	return res;
 }
 
-bool hooks::Hook(void* target, void* detour, void* original, const char* name) {
+bool Hooks::Hook(void* target, void* detour, void* original, const char* name) {
 	bool result =
 		MH_CreateHook(target, detour, (LPVOID*)original) == MH_OK
 		&& MH_EnableHook(target) == MH_OK;
@@ -35,7 +36,7 @@ bool hooks::Hook(void* target, void* detour, void* original, const char* name) {
 	return result;
 }
 
-bool hooks::HookData::SetEnabled(bool val) {
+bool Hooks::HookData::SetEnabled(bool val) {
 	bool res = false;
 	if (enabled != val) {
 		if (val)

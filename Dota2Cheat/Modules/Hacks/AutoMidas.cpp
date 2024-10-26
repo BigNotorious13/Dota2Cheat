@@ -45,18 +45,12 @@ void Modules::M_AutoMidas::OnFrame() {
 			return false;
 
 		return true;
-	};
+		};
 
 	EntityList.ForEachOfType(EntityType::Creep, [this, midas, canMidas](auto& wrap) {
 		if (canMidas(wrap))
 		{
-			ctx.localPlayer->PrepareOrder(
-				DOTA_UNIT_ORDER_CAST_TARGET,
-				wrap->GetIndex(),
-				Vector::Zero,
-				midas->GetIndex(),
-				DOTA_ORDER_ISSUER_PASSED_UNIT_ONLY,
-				ctx.localHero);
+			ctx.localPlayer->CastTarget(midas, wrap);
 
 			lastTime = CGameRules::Get()->GetGameTime();
 		}

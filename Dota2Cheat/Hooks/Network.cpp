@@ -59,7 +59,7 @@ bool Hooks::D2CNetFilter::Filter(VClass* netMsg, INetChannel* netchan) {
 	if (Config::Debug::LogFilterMessages) {
 		Color c{ 255,80,255 };
 
-		Signatures::CMsgColor(&c, "Message: %s\n", serializer->unscopedName);
+		ConColorMsg(c, "Message: %s\n", serializer->unscopedName);
 	}
 
 	return false;

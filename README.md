@@ -44,10 +44,10 @@ To open the cheat menu, press Insert
   - Modifier Revealer:
     - Shows target-cast spells(Assassinate, Charge of Darkness)
     - Shows Linken's Sphere on everyone
-    - Shows True Sight on allies and wards
+    - Shows enemy True Sight on allies and wards
   - Customizable enemy illusion coloring
   - Shows trajectories of enemy projectiles like Mirana's arrow and non-projectile abilities like Meat Hook
-  - ~~Visible by Enemy~~ RIP on 21.02.2023, you shall not be forgotten
+  - Visible by Enemy with filters (RIP 21.02.2023, born 26.10.2024, welcome back)
 
 - Convars:
   - Using ConVar spoofing to counter serverside detection mechanisms

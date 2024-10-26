@@ -51,6 +51,7 @@
         "FrameStageNotify": 36,
         "GetNetworkFieldChangeCallbackQueue": 29,
         "NotifyDisconnect": 14,
+        "CreateMove": 15,
         "VoiceReliable": 117
     },
     "CUIEngineSource2": {
@@ -59,6 +60,9 @@
         "RunScript": 81,
 		"MakeSymbol": 114
     },
+	"CDOTAInput": {
+		"CreateMove": 5
+	},
 	"CNetworkMessages": {
 		"FindNetworkMessageByID": 31
 	}

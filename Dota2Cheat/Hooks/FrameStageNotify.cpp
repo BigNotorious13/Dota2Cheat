@@ -7,6 +7,7 @@
 #include "../Modules/Hacks/AutoMidas.h"
 #include "../Modules/Hacks/AutoPing.h"
 #include "../Modules/Hacks/DotaPlusUnlocker.h"
+#include "../Modules/Hacks/RuneSnatcher.h"
 #include "../Modules/Hacks/IllusionColoring.h"
 #include "../Modules/Hacks/LinearProjectileWarner.h"
 #include "../Modules/Hacks/RiverPaint.h"
@@ -25,6 +26,8 @@
 #include "../Modules/UI/UIOverhaul.h"
 
 #include "../Modules/Utility/ParticleGC.h"
+#include <dota_usercmd.pb.h>
+#include "../Modules/Hacks/VisibleByEnemy.h"
 
 using namespace Modules;
 
@@ -44,6 +47,10 @@ void UpdateWeather() {
 bool amodPrintScheduled = false;
 
 void InGameLogic() {
+	ONLY_ONCE{
+		CFileSys::Get()->AddSearchPath(d2c.GetResource("assets\\dota\\").c_str(), "GAME", CFileSys::PATH_ADD_TO_TAIL);
+	}
+
 	if (amodPrintScheduled) {
 		if (ctx.localHero) {
 			auto k = ctx.localHero->GetModifiedAssetString("nevermore_nev_firstblood_03");
@@ -93,6 +100,7 @@ void InGameLogic() {
 			&LastHitMarker,
 			&AutoMidas,
 			&AegisSnatcher,
+			&RuneSnatcher,
 		};
 
 		for (auto l : ActiveListeners)
